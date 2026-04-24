@@ -4,61 +4,61 @@
 #云编译公用核心
 name: WRT-CORE
 
-于:
+on:
   workflow_call:
     inputs:
       WRT_CONFIG:
         required: true
-        输入: string
+        type: string
       WRT_CONFIG_FILE:
         required: false
-        输入: string
+        type: string
       WRT_THEME:
         required: true
-        输入: string
+        type: string
       WRT_NAME:
         required: true
-        输入: string
+        type: string
       WRT_SSID:
         required: true
-        输入: string
+        type: string
       WRT_WORD:
         required: true
-        输入: string
+        type: string
       WRT_IP:
         required: true
-        输入: string
+        type: string
       WRT_PW:
         required: true
-        输入: string
+        type: string
       WRT_REPO:
         required: true
-        输入: string
+        type: string
       WRT_BRANCH:
         required: true
-        输入: string
+        type: string
       WRT_SOURCE:
         required: true
-        输入: string
+        type: string
       WRT_PACKAGE:
         required: false
-        输入: string
+        type: string
       WRT_GFW:
         required: false
-        输入: boolean
-        默认: false
+        type: boolean
+        default: false
       WRT_USB:
         required: false
-        输入: boolean
-        默认: false
+        type: boolean
+        default: false
       WRT_MMC:
         required: false
-        输入: boolean
-        默认: false
+        type: boolean
+        default: false
       WRT_TEST:
         required: false
-        输入: boolean
-        默认: false
+        type: boolean
+        default: false
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
