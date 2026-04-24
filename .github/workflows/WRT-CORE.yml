@@ -4,61 +4,61 @@
 #云编译公用核心
 name: WRT-CORE
 
-on:
+于:
   workflow_call:
     inputs:
       WRT_CONFIG:
         required: true
-        type: string
+        输入: string
       WRT_CONFIG_FILE:
         required: false
-        type: string
+        输入: string
       WRT_THEME:
         required: true
-        type: string
+        输入: string
       WRT_NAME:
         required: true
-        type: string
+        输入: string
       WRT_SSID:
         required: true
-        type: string
+        输入: string
       WRT_WORD:
         required: true
-        type: string
+        输入: string
       WRT_IP:
         required: true
-        type: string
+        输入: string
       WRT_PW:
         required: true
-        type: string
+        输入: string
       WRT_REPO:
         required: true
-        type: string
+        输入: string
       WRT_BRANCH:
         required: true
-        type: string
+        输入: string
       WRT_SOURCE:
         required: true
-        type: string
+        输入: string
       WRT_PACKAGE:
         required: false
-        type: string
+        输入: string
       WRT_GFW:
         required: false
-        type: boolean
-        default: false
+        输入: boolean
+        默认: false
       WRT_USB:
         required: false
-        type: boolean
-        default: false
+        输入: boolean
+        默认: false
       WRT_MMC:
         required: false
-        type: boolean
-        default: false
+        输入: boolean
+        默认: false
       WRT_TEST:
         required: false
-        type: boolean
-        default: false
+        输入: boolean
+        默认: false
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -246,15 +246,6 @@ jobs:
 
           echo "WRT_GFW=$WRT_GFW"
 
-          if is_true "$WRT_GFW"; then
-            echo "Checking luci-app-homeproxy availability in feeds..."
-            ./scripts/feeds search luci-app-homeproxy || true
-          fi
-
-          if is_true "$WRT_GFW"; then
-            printf '\nCONFIG_PACKAGE_luci-app-homeproxy=y\n' >> .config
-          fi
-
           if is_true "$WRT_USB"; then
             cat $GITHUB_WORKSPACE/Config/USB.txt >> .config
             ADD_DISK_CONFIG=true
@@ -268,19 +259,6 @@ jobs:
           if [[ "$ADD_DISK_CONFIG" == "true" ]]; then
             cat $GITHUB_WORKSPACE/Config/DISK.txt >> .config
           fi
-
-          echo "homeproxy config (before Settings.sh):"
-          grep -n "CONFIG_PACKAGE_luci-app-homeproxy" .config || true
-
-          $GITHUB_WORKSPACE/Scripts/Settings.sh
-
-          echo "homeproxy config (after Settings.sh, before defconfig):"
-          grep -n "CONFIG_PACKAGE_luci-app-homeproxy" .config || true
-
-          make defconfig -j$(nproc) && make clean -j$(nproc)
-
-          echo "homeproxy config (after defconfig):"
-          grep -n "CONFIG_PACKAGE_luci-app-homeproxy" .config || true
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
@@ -336,7 +314,7 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
           tag_name: ${{env.WRT_CONFIG}}-${{env.WRT_INFO}}-${{env.WRT_BRANCH}}-${{env.WRT_DATE}}
-          files: ./wrt/upload/*.*
+          文件: ./wrt/upload/*.*
           body: |
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
