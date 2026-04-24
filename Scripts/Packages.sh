@@ -64,6 +64,8 @@ UPDATE_PACKAGE "netspeedtest" "sirpdboy/netspeedtest" "main" "" "homebox speedte
 UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "luci-app-timewol luci-app-wolplus"
 UPDATE_PACKAGE "owq-wol" "isalikai/luci-app-owq-wol" "main"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
+UPDATE_PACKAGE "UA-Mask" "Zesuy/UA-Mask" "main"
+UPDATE_PACKAGE "UA3F" "SunBK201/UA3F" "master"
 
 #更新软件包版本
 UPDATE_VERSION() {
