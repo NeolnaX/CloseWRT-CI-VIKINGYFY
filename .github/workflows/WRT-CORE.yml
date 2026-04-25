@@ -246,6 +246,15 @@ jobs:
 
           echo "WRT_GFW=$WRT_GFW"
 
+          if is_true "$WRT_GFW"; then
+            echo "Checking luci-app-homeproxy availability in feeds..."
+            ./scripts/feeds search luci-app-homeproxy || true
+          fi
+
+          if is_true "$WRT_GFW"; then
+            printf '\nCONFIG_PACKAGE_luci-app-homeproxy=y\n' >> .config
+          fi
+
           if is_true "$WRT_USB"; then
             cat $GITHUB_WORKSPACE/Config/USB.txt >> .config
             ADD_DISK_CONFIG=true
@@ -260,9 +269,18 @@ jobs:
             cat $GITHUB_WORKSPACE/Config/DISK.txt >> .config
           fi
 
+          echo "homeproxy config (before Settings.sh):"
+          grep -n "CONFIG_PACKAGE_luci-app-homeproxy" .config || true
+
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
+          echo "homeproxy config (after Settings.sh, before defconfig):"
+          grep -n "CONFIG_PACKAGE_luci-app-homeproxy" .config || true
+
           make defconfig -j$(nproc) && make clean -j$(nproc)
+
+          echo "homeproxy config (after defconfig):"
+          grep -n "CONFIG_PACKAGE_luci-app-homeproxy" .config || true
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
